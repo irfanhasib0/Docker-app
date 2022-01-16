@@ -1,0 +1,58 @@
+FROM ubuntu:20.04
+#nvidia/cuda:11.4.3-cudnn8-runtime-ubuntu20.04
+#ARG gpus all
+#RUN nvidia-smi
+#FROM tensorflow/tensorflow:2.4.2-gpu-jupyter
+# Install required packages
+#RUN set -eux
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -y update
+RUN apt-get install -y --no-install-recommends
+RUN apt install -y software-properties-common
+#wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+COPY Miniconda3-py38_4.10.3-Linux-x86_64.sh Miniconda3-py38_4.10.3-Linux-x86_64.sh
+RUN chmod +x ./Miniconda3-py38_4.10.3-Linux-x86_64.sh
+RUN bash ./Miniconda3-py38_4.10.3-Linux-x86_64.sh -b -p $HOME/miniconda
+#RUN ./Miniconda3-py38_4.10.3-Linux-x86_64.sh
+#RUN cd /home && ls 
+#COPY /home/data/cudnn-local-repo-ubuntu2004-8.3.2.44_1.0-1_amd64.deb ./cudnn-local-repo-ubuntu2004-8.3.2.44_1.0-1_amd64.deb
+#RUN ls /home/
+#RUN chmod +x cudnn-local-repo-ubuntu2004-8.3.2.44_1.0-1_amd64.deb
+
+#RUN apt-get install -y wget
+#RUN wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn8-dev_8.0.4.30-1+cuda11.1_amd64.deb
+#RUN dpkg -i libcudnn8-dev_8.0.4.30-1+cuda11.1_amd64.deb
+
+#RUN add-apt-repository ppa:graphics-drivers/ppa
+#
+#RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+#RUN mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+#RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+#RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+#RUN apt-get -y update
+#RUN apt-get -y install cuda-11.4.0 -silent
+#RUN wget https://developer.nvidia.com/compute/cudnn/secure/8.3.2/local_installers/11.5/cudnn-local-repo-ubuntu2004-8.3.2.44_1.0-1_amd64.deb
+#RUN $HOME/miniconda/condabin/conda
+#ENV PATH=$HOME/miniconda/condabin/:$PATH
+#RUN set -euo 
+RUN $HOME/miniconda/condabin/conda init bash
+RUN $HOME/miniconda/condabin/conda create -n python_38 python=3.8
+#RUN sudo $HOME/.bashrc
+#SHELL ["$HOME/miniconda/condabin/conda", "run", "-n", "python_38", "/bin/bash", "-c"]
+SHELL [ "/bin/bash", "--login", "-c" ]
+#RUN set -e 
+RUN $HOME/miniconda/condabin/conda activate python_38
+#RUN set +euo 
+#RUN add-apt-repository ppa:deadsnakes/ppa 
+#RUN apt-get -y update
+#RUN apt-get -y install python3.8 python3-pip
+RUN $HOME/miniconda/condabin/conda install tensorflow-gpu=2.4.0
+RUN $HOME/miniconda/condabin/conda install jupyter
+RUN $HOME/miniconda/condabin/conda install jupyterlab
+#RUN pip install -r requirements.txt
+#RUN nvidia-smi
+
+#Expose Jupyter port & cmd
+#EXPOSE 8888
+#RUN mkdir -p /opt/app/data
+#CMD jupyter lab --ip=* --port=9003 --no-browser --notebook-dir=/opt/app/data --allow-root
