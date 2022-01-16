@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+ nvidia-smi-test:
+   runtime: nvidia
+   image: nvidia/cuda:11.4.0-base
+   command: nvidia-smi
+ jupyterlab:
+   runtime: nvidia
+   build: ./ml_env
+   ports:
+     - "9001:9001"
+   volumes:
+     - ./:/home/
+   command: jupyter lab --ip=0.0.0.0 --port=9001 --no-browser --NotebookApp.token='' --notebook-dir=/home/ --allow-root
+#devices:
+# - /dev/nvidia0:/dev/nvidia0
+# - /dev/nvidiactl:/dev/nvidiactl
+# - /dev/nvidia-modeset:/dev/nvidia-modeset
+# - /dev/nvidia-uvm:/dev/nvidia-uvm
+# - /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools
