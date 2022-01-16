@@ -1,3 +1,3 @@
+lib/
+python38_gpu/
 *.deb
-lib/*
-python38_gpu/*
