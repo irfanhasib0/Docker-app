@@ -6,7 +6,7 @@ services:
    command: nvidia-smi
  jupyterlab:
    runtime: nvidia
-   build: ./ml_env
+   build: ./docker
    ports:
      - "9001:9001"
    volumes:

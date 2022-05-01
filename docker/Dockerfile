@@ -4,7 +4,7 @@ RUN apt-get -y update
 RUN apt-get install -y --no-install-recommends
 RUN apt install -y software-properties-common
 RUN apt install -y curl
-COPY libs/* ./
+#COPY libs/* ./
 RUN chmod +x ./cuda.sh
 RUN ./cuda.sh
 RUN add-apt-repository ppa:deadsnakes/ppa 
